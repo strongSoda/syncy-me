@@ -9,10 +9,33 @@ app = Flask(__name__)
 CORS(app, resources={r'/*': {'origins': '*'}})
 
 # render the index.html file
-@app.route('/')
-def index():
+@app.route('/<id>')
+def index(id):
     # render the index.html file
     # return send_file('index.html')
+
+    # javascript api call
+    # fetch(`https://L7PFECEWC3.algolia.net/1/indexes/syncy/${id}`, {
+    #     method: 'GET',
+    #     headers: {
+    #         'X-Algolia-API-Key': 'a953f96171e71bef23ebd1760c7dea10',
+    #         'X-Algolia-Application-Id': 'L7PFECEWC3',
+    #     }
+    # })
+
+    # convert the above javascript api call to python code
+    import requests
+    url = f'https://L7PFECEWC3.algolia.net/1/indexes/syncy/{id}'
+    headers = {
+        'X-Algolia-API-Key': 'a953f96171e71bef23ebd1760c7dea10',
+        'X-Algolia-Application-Id': 'L7PFECEWC3',
+    }
+    response = requests.get(url, headers=headers)
+    data = response.json()
+    print('here', data)
+
+    # return the response from the above api call
+
 
     # send multiline html string
     return '''
@@ -25,33 +48,35 @@ def index():
     <!-- favicon -->
     <link rel="icon" href="https://i.imgur.com/P7kIQEm.png" type="image/x-icon">
 
-    <title>Syncy</title>
+    <title>''' + data["name"] + ''' | Syncy</title>
     <!-- meta tags empty -->
-    <meta name="description" content="">
-    <meta name="keywords" content="">
-    <meta name="author" content="">
+    <meta name="description" content="
+    ''' + data["bio"] + '''
+    ">
+    <meta name="keywords" content="
+    ''' + ','.join(data["categories"]) + '''
+    ">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- og meta tags empty -->
-    <meta property="og:title" content="">
-    <meta property="og:description" content="">
-    <meta property="og:image" content="">
-    <meta property="og:url" content="">
-    <meta property="og:site_name" content="">
-    <meta property="og:locale" content="">
-    <meta property="og:type" content="">
-    <meta property="og:updated_time" content="">
-    <meta property="og:see_also" content="">
+    <meta property="og:title" content="''' + data["name"] + ''' | Syncy">
+    <meta property="og:description" content="
+    ''' + data["bio"] + '''
+    ">
+    <meta property="og:image" content="
+    ''' + data["profile_image_url"] + '''
+    ">
 
     <!-- twitter meta tags empty -->
-    <meta name="twitter:card" content="">
-    <meta name="twitter:site" content="">
-    <meta name="twitter:creator" content="">
-    <meta name="twitter:title" content="">
-    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="''' + data["name"] + ''' | Syncy">
+    <meta name="twitter:description" content="
+    ''' + data["bio"] + '''
+    ">
     <meta name="twitter:image" content="">
-    <meta name="twitter:image:alt" content="">
-    <meta name="twitter:domain" content="">
+    <meta name="twitter:image" content="
+    ''' + data["profile_image_url"] + '''
+    ">
     <style>
         * {
             margin: 0;
@@ -188,24 +213,24 @@ def index():
     <!-- profile  with name, image, bio -->
     <div class="profile">
         <div class="profile-image">
-            <img src="" alt="profile image">
+            <img src="''' + data['profile_image_url'] + '''" alt="profile image">
         </div>
         <div class="profile-links">
-            <a class="linkedin-url" target="_blank" rel="noopener noreferrer">
+            <a class="linkedin-url" href="''' + data['linkedin_url'] + '''" target="_blank" rel="noopener noreferrer">
                 <img class="linkedin-img" src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="linkedin">
             </a>
         </div>
         <div class="profile-info">
-            <h1 class="profile-name"></h1>
+            <h1 class="profile-name">''' + data['name'] + '''</h1>
             <!-- book call button fixed bottom position -->
             <div class="book-call">
                 <button>Book a call with me</button>
             </div>
-            <p class="profile-bio"></p>
+            <p class="profile-bio">''' + data['bio'] + '''</p>
         </div>
         <div class="profile-location">
             <p>
-                <span class="profile-city"></span>, <span class="profile-country"></span></p>
+                <span class="profile-city">''' + data['city'] + '''</span>, <span class="profile-country">''' + data['country'] + '''</span></p>
         </div>
         <!-- categories -->
         <div class="profile-categories">
