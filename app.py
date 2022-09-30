@@ -48,7 +48,7 @@ def index(id):
     <!-- favicon -->
     <link rel="icon" href="https://i.imgur.com/P7kIQEm.png" type="image/x-icon">
 
-    <title>''' + data["name"] + ''' | Syncy</title>
+    <title>''' + data["name"] + ''' | Book a call on Syncy</title>
     <!-- meta tags empty -->
     <meta name="description" content="
     ''' + data["bio"] + '''
@@ -60,7 +60,7 @@ def index(id):
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- og meta tags empty -->
-    <meta property="og:title" content="''' + data["name"] + ''' | Syncy">
+    <meta property="og:title" content="''' + data["name"] + ''' | Book a call on Syncy">
     <meta property="og:description" content="
     ''' + data["bio"] + '''
     ">
@@ -70,7 +70,7 @@ def index(id):
 
     <!-- twitter meta tags empty -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="''' + data["name"] + ''' | Syncy">
+    <meta name="twitter:title" content="''' + data["name"] + ''' | Book a call on Syncy">
     <meta name="twitter:description" content="
     ''' + data["bio"] + '''
     ">
