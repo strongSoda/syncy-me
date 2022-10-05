@@ -8,9 +8,14 @@ app = Flask(__name__)
 # enable CORS
 CORS(app, resources={r'/*': {'origins': '*'}})
 
+@app.route('/home', methods=['GET'])
+def home():
+    # return template index.html
+    return send_file('template/index.html')
+
 # render the index.html file
 @app.route('/<id>')
-def index(id):
+def profile(id):
     # render the index.html file
     # return send_file('index.html')
 
