@@ -194,7 +194,7 @@ def index(id):
         }
         .footer {
             width: 100vw;
-            margin-top: 1rem;
+            margin-top: 4rem;
             color: gray;
             background-color: #f9faff;
 
@@ -214,24 +214,24 @@ def index(id):
     <!-- profile  with name, image, bio -->
     <div class="profile">
         <div class="profile-image">
-            <img src="" alt="profile image">
+            <img src="''' + data["profile_image_url"] + '''" alt="profile image">
         </div>
         <div class="profile-links">
-            <a class="linkedin-url" target="_blank" rel="noopener noreferrer">
+            <a class="linkedin-url" href="''' + data["linkedin_url"] + '''" target="_blank" rel="noopener noreferrer">
                 <img class="linkedin-img" src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="linkedin">
             </a>
         </div>
         <div class="profile-info">
-            <h1 class="profile-name"></h1>
+            <h1 class="profile-name">''' + data["name"] + '''</h1>
             <!-- book call button fixed bottom position -->
             <div class="book-call">
                 <button>Book a call with me</button>
             </div>
-            <p class="profile-bio"></p>
+            <p class="profile-bio">''' + data["bio"] + '''</p>
         </div>
         <div class="profile-location">
             <p>
-                <span class="profile-city"></span>, <span class="profile-country"></span></p>
+                <span class="profile-city">''' + data["city"] + '''</span>, <span class="profile-country">''' + data["country"] + '''</span></p>
         </div>
         <!-- categories -->
         <div class="profile-categories">
@@ -262,12 +262,6 @@ def index(id):
         .then(data => {
             console.log(data);
             // set profile data
-            document.querySelector('.profile-name').textContent = data.name;
-            document.querySelector('.profile-bio').textContent = data.bio;
-            document.querySelector('.profile-image img').src = data.profile_image_url;
-            document.querySelector('.linkedin-url').href = data.linkedin_url;
-            document.querySelector('.profile-city').textContent = data.city;
-            document.querySelector('.profile-country').textContent = data.country;
             // set categories
             const categories = data.categories;
             const categoriesList = document.querySelector('.profile-categories-list');
