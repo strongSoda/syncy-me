@@ -96,18 +96,21 @@
             fetch(url, options)
                 .then(response => response.json())
                 .then(data => {
+                    let found = false;
                     console.log(data)
                     // loop through the hits and get the object for which name matches the searchvalue
                     for (let i = 0; i < data.hits.length; i++) {
                         // case insensitive and trim the name
                         if (data.hits[i].name.toLowerCase().trim() == searchvalue.toLowerCase().trim()) {
+                            found = true;
                             // redirect to the user page
                             window.location.href = "/" + data.hits[i].objectID;
                         }
                     }
 
-                    // if no user is found
-                    alert("No user found with that name");
+                    if(!found) {
+                        alert("No user found with that name");
+                    }
                 });
         });
     </script>
