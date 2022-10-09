@@ -11,7 +11,7 @@ CORS(app, resources={r'/*': {'origins': '*'}})
 @app.route('/home', methods=['GET'])
 def home():
     # return template index.html
-    return send_file('template/index.html')
+    return send_file('template/search.html')
 
 # render the index.html file
 @app.route('/<id>')

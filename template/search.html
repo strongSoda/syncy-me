@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Syncy Profile Lookup</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+            
+        }
+        body {
+            /* blue radial gradient background  */
+            background: radial-gradient(circle, #1b2735, #090a0f);
+
+            /* background image */
+            background-image: url("https://i.imgur.com/IFWhj1G.jpg");
+
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+
+        }
+        .searchbar {
+            width: 50vw;
+            margin: 22% auto;
+            /* background-color: aqua; */
+            /* height:  50px; */
+            padding: 10px;
+            font-size: 20px;
+
+            text-align: center;
+
+        }
+        .searchbar input {
+            width: 100%;
+            height: 5vh;
+            padding: 1em;
+            border: 1px solid #ccc;
+            border-radius: 20em;
+            outline: none;
+            font-size: 20px;
+        }
+        .searchbar button {
+            width: 20vw;
+            padding: .6em;
+            margin-top: 14px;
+            border: none;
+            border-radius: 20em;
+            outline: none;
+            font-size: 16px;
+            /* background-color: #fff; */
+            /* light blue background */
+            background: linear-gradient(to right, #00b4db, #0083b0);
+            color: #fff;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- big sentered on page Searchbar and button below it -->
+    <div class="searchbar">
+        <input type="text" id="searchbar" placeholder="Enter your name to lookup your Syncy profile">
+        <button id="searchbutton">Search</button>
+    </div>
+    <script>
+        // get the searchbar and button
+        const searchbar = document.getElementById("searchbar");
+        const searchbutton = document.getElementById("searchbutton");
+
+        // add event listener to button
+        searchbutton.addEventListener("click", function() {
+            // get the value of the searchbar
+            const searchvalue = searchbar.value;
+            // send the value to the server
+            // window.location.href = "/search/" + searchvalue;
+
+            // algolia v4 index query post request to get the user
+            const url = "https://L7PFECEWC3-dsn.algolia.net/1/indexes/syncy/query";
+            const data = {
+                "params": "query=" + searchvalue
+            };
+            const options = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-Algolia-API-Key": "a953f96171e71bef23ebd1760c7dea10",
+                    "X-Algolia-Application-Id": "L7PFECEWC3"
+                },
+                body: JSON.stringify(data)
+            };
+
+            fetch(url, options)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data)
+                    // loop through the hits and get the object for which name matches the searchvalue
+                    for (let i = 0; i < data.hits.length; i++) {
+                        // case insensitive and trim the name
+                        if (data.hits[i].name.toLowerCase().trim() == searchvalue.toLowerCase().trim()) {
+                            // redirect to the user page
+                            window.location.href = "/" + data.hits[i].objectID;
+                        }
+                    }
+
+                    // if no user is found
+                    alert("No user found with that name");
+                });
+        });
+    </script>
+</body>
+</html>
