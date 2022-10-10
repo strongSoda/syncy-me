@@ -101,11 +101,17 @@
                     // loop through the hits and get the object for which name matches the searchvalue
                     for (let i = 0; i < data.hits.length; i++) {
                         // case insensitive and trim the name
-                        if (data.hits[i].name.toLowerCase().trim() == searchvalue.toLowerCase().trim()) {
-                            found = true;
-                            // redirect to the user page
+                        // check if the name includes the searchvalue
+                        if (data.hits[i].name.toLowerCase().trim().includes(searchvalue.toLowerCase().trim())) {
+                            // if it does then redirect to the profile page
                             window.location.href = "/" + data.hits[i].objectID;
+                            found = true;
+                            break;
                         }
+                        // if (data.hits[i].name.toLowerCase().trim() == searchvalue.toLowerCase().trim()) {
+                        //     found = true;
+                        //     // redirect to the user page
+                        // }
                     }
 
                     if(!found) {
